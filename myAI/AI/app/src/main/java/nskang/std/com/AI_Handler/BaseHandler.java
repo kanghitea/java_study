@@ -3,12 +3,7 @@ package nskang.std.com.AI_Handler;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
-import android.util.Log;
 
-import nskang.std.com.MSG.ICtrlMsg;
-import nskang.std.com.MSG.IMainMsg;
-import nskang.std.com.MSG.IMsg;
-import nskang.std.com.MSG.ISysMsg;
 import nskang.std.com.MSG.WHAT;
 
 public abstract class BaseHandler extends Handler {
@@ -18,21 +13,18 @@ public abstract class BaseHandler extends Handler {
     @Override
     public void handleMessage(Message msg) {
         switch (msg.what) {
-            case WHAT.SYSTEM: {
-                Log.e("DEBUG", "==== nskang ==== I'm here in WHAT.SYSTEM " + msg.obj.toString() + msg.obj);
-                handleSysMessage((ISysMsg) msg.obj);
+            case WHAT.MSG1: {
+                handleSysMessage(msg);
             }
             break;
 
-            case WHAT.CONTROL: {
-                Log.e("DEBUG", "==== nskang ==== I'm here in WHAT.CONTROL " + msg.obj.toString());
-                handleCtrlMessage((ICtrlMsg) msg.obj);
+            case WHAT.MSG2: {
+                handleCtrlMessage(msg);
             }
             break;
 
-            case WHAT.UGS: {
-                Log.e("DEBUG", "==== nskang ==== I'm here in WHAT.UGS " + msg.obj.toString());
-                handleUgsMessage((IMainMsg) msg.obj);
+            case WHAT.MSG3: {
+                handleWorksMessage(msg);
             }
             break;
 
@@ -42,17 +34,17 @@ public abstract class BaseHandler extends Handler {
         }
     }
 
-    public Message makeHandlerMsg(IMsg hrMsg, int what) {
+    public Message makeHandlerMsg(String obj, int what) {
         Message msg = Message.obtain(null, what);
         {
-            msg.obj = hrMsg;
+            msg.obj = obj;
         }
         return msg;
     }
 
-    protected abstract void handleSysMessage(ISysMsg sysMsg);
+    protected abstract void handleSysMessage(Message msg);
 
-    protected abstract void handleCtrlMessage(ICtrlMsg ctrlMsg);
+    protected abstract void handleCtrlMessage(Message msg);
 
-    protected abstract void handleUgsMessage(IMainMsg ugsMsg);
+    protected abstract void handleWorksMessage(Message msg);
 }

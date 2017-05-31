@@ -5,10 +5,8 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
 import android.os.Build;
-import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.IBinder;
-import android.os.Message;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -27,10 +25,10 @@ public class AI_Service_Main extends Service {
     private static final String TAG = AI_Service_Main.class.getSimpleName();
     private static boolean isRunning = false, looping = false;
     private HashMap<Integer, EventRegistration> mManagerMap;
-    private AI_Service_MainThread mAI_Service_MainThread;
+    private static AI_Service_MainThread mAI_Service_MainThread;
     private Main_Hash_and_Handler mMain_Hash_and_Handler;
-    private HandlerThread mMainThread;
-    private MainHandler mMainHandler;
+    private static HandlerThread mMainThread;
+    private static MainHandler mMainHandler;
 
     private Notification mNotifications;
     private static final int NOTIFICATION_ID = 1;
@@ -80,14 +78,14 @@ public class AI_Service_Main extends Service {
             mMainHandler = new MainHandler(mMainThread.getLooper());
             mMain_Hash_and_Handler = new Main_Hash_and_Handler();
             if (!mMain_Hash_and_Handler.isRunning()) {
-                mManagerMap = mMain_Hash_and_Handler.Main_Service_Start(mHandler);
+                mManagerMap = mMain_Hash_and_Handler.Main_Service_Start(mMainHandler);
             }
 
             while (Get_Looping_status()) {
                 DebugLog.i(TAG, "===== while(looping)!!");
                 loop_countinuasly();
                 try {
-                    Thread.sleep(100);
+                    sleep(1);
                 } catch (InterruptedException ie) {
                     DebugLog.e(TAG, "===== Interrupt Exception Error occurs!!");
                 }
@@ -97,11 +95,14 @@ public class AI_Service_Main extends Service {
     }
 
     public void loop_countinuasly() {
-        Iterator<EventRegistration> itr = mManagerMap.values().iterator();
 
-        while (itr.hasNext()) {
-            EventRegistration Eventwork = itr.next();
-            Eventwork.doWork();
+        synchronized (mManagerMap.values()) {
+            Iterator<EventRegistration> itr = mManagerMap.values().iterator();
+
+            while (itr.hasNext()) {
+                EventRegistration Eventwork = itr.next();
+                Eventwork.doWork();
+            }
         }
     }
 
@@ -131,28 +132,29 @@ public class AI_Service_Main extends Service {
         looping = val;
     }
 
-    Handler mHandler = new Handler() {
-        public void handleMessage(Message msg) {
-            switch (msg.what) {
-                case 0:
-                    DebugLog.i(TAG, "========  handler RCV : 0 ============");
-                    mMainHandler.handleCtrlMessage(null);
-                    break;
-                case 1:
-                    DebugLog.i(TAG, "========  handler RCV : 1 ============");
-                    mMainHandler.handleSysMessage(null);
-                    break;
-                case 2:
-                    DebugLog.i(TAG, "========  handler RCV : 2 ============");
-                    mMainHandler.handleCtrlMessage(null);
-                    break;
-                case 3:
-                    DebugLog.i(TAG, "========  handler RCV : 3 ============");
-                    mMainHandler.handleUgsMessage(null);
-                    break;
-            }
-        }
-    };
+//    private static Handler mHandler = new Handler() {
+//        public void handleMessage(Message msg) {
+//            switch (msg.what) {
+//                case 0:
+//                    DebugLog.i(TAG, "========  handler RCV : 0 ============");
+//                    break;
+//                case 1:
+//                    DebugLog.i(TAG, "========  handler RCV : 1 ============");
+//                    mMainHandler.handleSysMessage(null);
+//                    break;
+//                case 2:
+//                    DebugLog.i(TAG, "========  handler RCV : 2 ============");
+////                    CtrlMsg mctrl = new CtrlMsg(CTRL_MSG_TYPE.CTRL_MSG_TYPE_MSG1);
+////                    mMainHandler.handleCtrlMessage(mctrl);
+//                    mMainHandler.handleCtrlMessage(null);
+//                    break;
+//                case 3:
+//                    DebugLog.i(TAG, "========  handler RCV : 3 ============");
+//                    mMainHandler.handleUgsMessage(null);
+//                    break;
+//            }
+//        }
+//    };
 
 
     private void showNotification() {
