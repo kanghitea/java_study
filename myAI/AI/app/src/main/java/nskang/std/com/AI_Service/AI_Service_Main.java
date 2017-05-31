@@ -85,7 +85,7 @@ public class AI_Service_Main extends Service {
                 DebugLog.i(TAG, "===== while(looping)!!");
                 loop_countinuasly();
                 try {
-                    sleep(1);
+                    sleep(100);
                 } catch (InterruptedException ie) {
                     DebugLog.e(TAG, "===== Interrupt Exception Error occurs!!");
                 }
