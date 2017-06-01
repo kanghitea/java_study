@@ -7,7 +7,6 @@ import android.os.Message;
 import nskang.std.com.AI_Handler.BaseHandler;
 import nskang.std.com.AI_Handler.MainHandler;
 import nskang.std.com.DEFINE.WORK_DEFINE;
-import nskang.std.com.DLOG.DebugLog;
 import nskang.std.com.MSG.CMSG;
 import nskang.std.com.MSG.WHAT;
 import nskang.std.com.callback_1.CallbackEvent;
