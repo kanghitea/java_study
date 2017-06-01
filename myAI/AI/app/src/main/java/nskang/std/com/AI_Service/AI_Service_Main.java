@@ -132,31 +132,6 @@ public class AI_Service_Main extends Service {
         looping = val;
     }
 
-//    private static Handler mHandler = new Handler() {
-//        public void handleMessage(Message msg) {
-//            switch (msg.what) {
-//                case 0:
-//                    DebugLog.i(TAG, "========  handler RCV : 0 ============");
-//                    break;
-//                case 1:
-//                    DebugLog.i(TAG, "========  handler RCV : 1 ============");
-//                    mMainHandler.handleSysMessage(null);
-//                    break;
-//                case 2:
-//                    DebugLog.i(TAG, "========  handler RCV : 2 ============");
-////                    CtrlMsg mctrl = new CtrlMsg(CTRL_MSG_TYPE.CTRL_MSG_TYPE_MSG1);
-////                    mMainHandler.handleCtrlMessage(mctrl);
-//                    mMainHandler.handleCtrlMessage(null);
-//                    break;
-//                case 3:
-//                    DebugLog.i(TAG, "========  handler RCV : 3 ============");
-//                    mMainHandler.handleUgsMessage(null);
-//                    break;
-//            }
-//        }
-//    };
-
-
     private void showNotification() {
         Intent notiIntent = new Intent(getApplicationContext(), MainActivity.class);
         mNotifications = new Notification.Builder(getApplicationContext())
