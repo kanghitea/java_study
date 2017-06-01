@@ -4,10 +4,9 @@ import android.os.HandlerThread;
 import android.os.Looper;
 import android.os.Message;
 
-import nskang.std.com.AI_Handler.BaseHandler;
+import nskang.std.com.AI_Handler.TOPHandler;
 import nskang.std.com.AI_Handler.MainHandler;
 import nskang.std.com.DEFINE.WORK_DEFINE;
-import nskang.std.com.DLOG.DebugLog;
 import nskang.std.com.MSG.CMSG;
 import nskang.std.com.MSG.WHAT;
 import nskang.std.com.callback_1.CallbackEvent;
@@ -55,7 +54,7 @@ public class second_class{
     return eventRegistration;
    }
 
-    private static class NetHandler extends BaseHandler {
+    private static class NetHandler extends TOPHandler {
         public NetHandler(Looper looper) {
             super(looper);
         }

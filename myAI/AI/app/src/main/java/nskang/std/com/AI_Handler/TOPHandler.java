@@ -7,8 +7,8 @@ import android.os.Message;
 import nskang.std.com.MSG.CMSG;
 import nskang.std.com.MSG.WHAT;
 
-public abstract class BaseHandler extends Handler {
-    protected BaseHandler(Looper looper) {
+public abstract class TOPHandler extends Handler {
+    protected TOPHandler(Looper looper) {
         super(looper);
     }
     @Override

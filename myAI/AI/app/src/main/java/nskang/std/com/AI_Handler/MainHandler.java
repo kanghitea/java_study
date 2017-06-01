@@ -6,7 +6,7 @@ import android.util.Log;
 import nskang.std.com.DEFINE.WORK_DEFINE;
 import nskang.std.com.MSG.CMSG;
 
-public class MainHandler extends BaseHandler {
+public class MainHandler extends TOPHandler {
     private final static String TAG = "MainHandler";
     public MainHandler(Looper looper) {
         super(looper);
