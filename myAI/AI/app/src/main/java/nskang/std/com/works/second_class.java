@@ -6,7 +6,9 @@ import android.os.Message;
 
 import nskang.std.com.AI_Handler.BaseHandler;
 import nskang.std.com.AI_Handler.MainHandler;
+import nskang.std.com.DEFINE.WORK_DEFINE;
 import nskang.std.com.DLOG.DebugLog;
+import nskang.std.com.MSG.CMSG;
 import nskang.std.com.MSG.WHAT;
 import nskang.std.com.callback_1.CallbackEvent;
 import nskang.std.com.callback_1.EventRegistration;
@@ -38,8 +40,10 @@ public class second_class{
         @Override
         public void callbackMethod() {
             // TODO Auto-generated method stub
-            DebugLog.e(TAG, "===============   second call callback method from callee   ==================");
-            Message msg = mHandler.makeHandlerMsg("is from second_class",WHAT.MSG2);
+            second_class_sub_work msecond_class_sub_work = new second_class_sub_work();
+            msecond_class_sub_work.setSrc(msecond_class_sub_work.getMsgFrom());
+            msecond_class_sub_work.setDest(WORK_DEFINE.toDest2);
+            Message msg = mHandler.makeHandlerMsg(msecond_class_sub_work,WHAT.MSG2);
             mHandler.sendMessage(msg);
         }
 
@@ -57,17 +61,17 @@ public class second_class{
         }
 
         @Override
-        protected void handleSysMessage(Message msg) {
+        protected void handleSysMessage(CMSG msg) {
 
         }
 
         @Override
-        protected void handleCtrlMessage(Message msg) {
+        protected void handleCtrlMessage(CMSG msg) {
           topHandler.handleCtrlMessage(msg);
         }
 
         @Override
-        protected void handleWorksMessage(Message msg) {
+        protected void handleWorksMessage(CMSG msg) {
 
         }
     }

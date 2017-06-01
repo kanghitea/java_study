@@ -6,7 +6,9 @@ import android.os.Message;
 
 import nskang.std.com.AI_Handler.BaseHandler;
 import nskang.std.com.AI_Handler.MainHandler;
+import nskang.std.com.DEFINE.WORK_DEFINE;
 import nskang.std.com.DLOG.DebugLog;
+import nskang.std.com.MSG.CMSG;
 import nskang.std.com.MSG.WHAT;
 import nskang.std.com.callback_1.CallbackEvent;
 import nskang.std.com.callback_1.EventRegistration;
@@ -42,10 +44,12 @@ public class first_class {
         @Override
         public void callbackMethod() {
             // TODO Auto-generated method stub
-            DebugLog.e(TAG, "===============   first call callback method from callee   ==================");
-            Message msg;
-            msg = mHandler.makeHandlerMsg("is from first_class",WHAT.MSG1);
+            first_class_sub_work mfirst_class_sub_work = new first_class_sub_work();
+            mfirst_class_sub_work.setSrc(mfirst_class_sub_work.getMsgFrom());
+            mfirst_class_sub_work.setDest(WORK_DEFINE.toDest1);
+            Message msg = mHandler.makeHandlerMsg(mfirst_class_sub_work,WHAT.MSG1);
             mHandler.sendMessage(msg);
+
         }
     };
 
@@ -59,17 +63,17 @@ public class first_class {
         }
 
         @Override
-        protected void handleSysMessage(Message msg) {
+        protected void handleSysMessage(CMSG msg) {
             topHandler.handleSysMessage(msg);
         }
 
         @Override
-        protected void handleCtrlMessage(Message msg) {
+        protected void handleCtrlMessage(CMSG msg) {
 
         }
 
         @Override
-        protected void handleWorksMessage(Message msg) {
+        protected void handleWorksMessage(CMSG msg) {
 
         }
     }

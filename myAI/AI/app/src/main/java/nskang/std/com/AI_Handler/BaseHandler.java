@@ -4,6 +4,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 
+import nskang.std.com.MSG.CMSG;
 import nskang.std.com.MSG.WHAT;
 
 public abstract class BaseHandler extends Handler {
@@ -14,17 +15,17 @@ public abstract class BaseHandler extends Handler {
     public void handleMessage(Message msg) {
         switch (msg.what) {
             case WHAT.MSG1: {
-                handleSysMessage(msg);
+                handleSysMessage((CMSG) msg.obj);
             }
             break;
 
             case WHAT.MSG2: {
-                handleCtrlMessage(msg);
+                handleCtrlMessage((CMSG) msg.obj);
             }
             break;
 
             case WHAT.MSG3: {
-                handleWorksMessage(msg);
+                handleWorksMessage((CMSG) msg.obj);
             }
             break;
 
@@ -42,9 +43,17 @@ public abstract class BaseHandler extends Handler {
         return msg;
     }
 
-    protected abstract void handleSysMessage(Message msg);
+    public Message makeHandlerMsg(CMSG obj, int what) {
+        Message msg = Message.obtain(null, what);
+        {
+            msg.obj = obj;
+        }
+        return msg;
+    }
 
-    protected abstract void handleCtrlMessage(Message msg);
+    protected abstract void handleSysMessage(CMSG msg);
 
-    protected abstract void handleWorksMessage(Message msg);
+    protected abstract void handleCtrlMessage(CMSG msg);
+
+    protected abstract void handleWorksMessage(CMSG msg);
 }

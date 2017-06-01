@@ -6,7 +6,9 @@ import android.os.Message;
 
 import nskang.std.com.AI_Handler.BaseHandler;
 import nskang.std.com.AI_Handler.MainHandler;
+import nskang.std.com.DEFINE.WORK_DEFINE;
 import nskang.std.com.DLOG.DebugLog;
+import nskang.std.com.MSG.CMSG;
 import nskang.std.com.MSG.WHAT;
 import nskang.std.com.callback_1.CallbackEvent;
 import nskang.std.com.callback_1.EventRegistration;
@@ -38,8 +40,10 @@ public class third_class{
         @Override
         public void callbackMethod() {
             // TODO Auto-generated method stub
-            DebugLog.e(TAG, "===============   third call callback method from callee   ==================");
-            Message msg = mHandler.makeHandlerMsg("is from third_class",WHAT.MSG3);
+            third_class_sub_work mthird_class_sub_work = new third_class_sub_work();
+            mthird_class_sub_work.setSrc(mthird_class_sub_work.getMsgFrom());
+            mthird_class_sub_work.setDest(WORK_DEFINE.toDest3);
+            Message msg = mHandler.makeHandlerMsg(mthird_class_sub_work,WHAT.MSG3);
             mHandler.sendMessage(msg);
         }
 
@@ -55,17 +59,17 @@ public class third_class{
         }
 
         @Override
-        protected void handleSysMessage(Message msg) {
+        protected void handleSysMessage(CMSG msg) {
 
         }
 
         @Override
-        protected void handleCtrlMessage(Message msg) {
+        protected void handleCtrlMessage(CMSG msg) {
 
         }
 
         @Override
-        protected void handleWorksMessage(Message msg) {
+        protected void handleWorksMessage(CMSG msg) {
             topHandler.handleWorksMessage(msg);
         }
     }
